@@ -1,0 +1,33 @@
+ 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+*.xlsx
+*.xlsm
+test_data/
+
+# Logs
+*.log
+
+# Local config
+.env
+config.local.json
