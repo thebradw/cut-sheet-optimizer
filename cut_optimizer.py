@@ -21,6 +21,8 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 from fractions import Fraction
 
+import pandas as pd
+
 # Local modules
 from cut_sheet_loader import load_cut_demand, STICK_LENGTHS
 
@@ -125,7 +127,6 @@ def optimise_cuts(workbook: Path, kerf: float | None = None) -> Path:
     Returns:
         Path to the actual output file written (Cut_sheet.xlsx or timestamped fallback).
     """
-    import pandas as pd
     
     active_kerf = kerf if kerf is not None else DEFAULT_KERF_INCHES
     tidy = load_cut_demand(workbook)
@@ -152,14 +153,14 @@ def optimise_cuts(workbook: Path, kerf: float | None = None) -> Path:
     try:
         result_df.to_excel(fixed_name, index=False)
         out_path = fixed_name
-        print(f"✔ Cut sheet written to: {out_path}")
+        print(f"Cut sheet written to: {out_path}")
     except PermissionError:
         # File is likely open/locked; write a timestamped copy instead
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
         fallback = out_dir / f"Cut_sheet_{ts}.xlsx"
         result_df.to_excel(fallback, index=False)
         out_path = fallback
-        print(f"⚠ 'Cut_sheet.xlsx' was locked. Wrote fallback: {out_path}")
+        print(f"'Cut_sheet.xlsx' was locked. Wrote fallback: {out_path}")
 
     return out_path
 
